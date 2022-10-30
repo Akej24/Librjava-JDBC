@@ -31,16 +31,17 @@ public interface Options {
         String modifiedData = scanner.next();
         String sql = "";
         switch (parameterOfBookToEdit) {
-            case 1 -> sql = String.format(SQLQueries.SET_TITLE_WHERE_ID.getQuery(), modifiedData, idOfBookToEdit);
-            case 2 -> sql = String.format(SQLQueries.SET_AUTHOR_WHERE_ID.getQuery(), modifiedData, idOfBookToEdit);
-            case 3 -> sql = String.format(SQLQueries.SET_RELEASE_DATE_WHERE_ID.getQuery(), modifiedData, idOfBookToEdit);
-            case 4 -> sql = String.format(SQLQueries.SET_NUMBER_OF_PAGES_WHERE_ID.getQuery(), modifiedData, idOfBookToEdit);
-            case 5 -> sql = String.format(SQLQueries.SET_PRICE_WHERE_ID.getQuery(), modifiedData, idOfBookToEdit);
-            case 6 -> sql = String.format(SQLQueries.SET_STATUS_WHERE_ID.getQuery(), modifiedData, idOfBookToEdit);
+            case 1 -> sql = SQLQueries.SET_TITLE_WHERE_ID.getQuery();
+            case 2 -> sql = SQLQueries.SET_AUTHOR_WHERE_ID.getQuery();
+            case 3 -> sql = SQLQueries.SET_RELEASE_DATE_WHERE_ID.getQuery();
+            case 4 -> sql = SQLQueries.SET_NUMBER_OF_PAGES_WHERE_ID.getQuery();
+            case 5 -> sql = SQLQueries.SET_PRICE_WHERE_ID.getQuery();
+            case 6 -> sql = SQLQueries.SET_STATUS_WHERE_ID.getQuery();
             default -> System.out.println("Enter a valid ID or element to be edited!");
         }
+        String result = String.format(sql, modifiedData, idOfBookToEdit);
         Statement editRecordWhereId = Main.databaseConnection.createStatement();
-        editRecordWhereId.executeUpdate(sql);
+        editRecordWhereId.executeUpdate(result);
     }
 
     static void option3(Scanner scanner) throws SQLException {
