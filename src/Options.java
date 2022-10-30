@@ -18,8 +18,7 @@ public interface Options {
         Messages.PRICE.print();
         int price = scanner.nextInt();
         Statement addToDatabase = Main.databaseConnection.createStatement();
-        String sql = "INSERT INTO librjava(title, author, releaseDate, numberOfPages, price) " +
-                "VALUES('"+title+"', '"+author+"', '"+releaseDate+"', "+numberOfPages+", "+price+");";
+        String sql = String.format(SQLQueries.INSERT_INTO.getQuery(), title, author, releaseDate, numberOfPages, price);
         addToDatabase.executeUpdate(sql);
     }
 
@@ -32,12 +31,12 @@ public interface Options {
         String modifiedData = scanner.next();
         String sql = "";
         switch (parameterOfBookToEdit) {
-            case 1 -> sql = String.format("UPDATE librjava SET title = '%s' WHERE id = %d;", modifiedData, idOfBookToEdit);
-            case 2 -> sql = String.format("UPDATE librjava SET author = '%s' WHERE id = %d;", modifiedData, idOfBookToEdit);
-            case 3 -> sql = String.format("UPDATE librjava SET releaseDate = '%s' WHERE id = %d;", modifiedData, idOfBookToEdit);
-            case 4 -> sql = String.format("UPDATE librjava SET numberOfPages = '%s' WHERE id = %d;", modifiedData, idOfBookToEdit);
-            case 5 -> sql = String.format("UPDATE librjava SET price = '%s' WHERE id = %d;", modifiedData, idOfBookToEdit);
-            case 6 -> sql = String.format("UPDATE librjava SET status = '%s' WHERE id = %d;", modifiedData, idOfBookToEdit);
+            case 1 -> sql = String.format(SQLQueries.SET_TITLE_WHERE_ID.getQuery(), modifiedData, idOfBookToEdit);
+            case 2 -> sql = String.format(SQLQueries.SET_AUTHOR_WHERE_ID.getQuery(), modifiedData, idOfBookToEdit);
+            case 3 -> sql = String.format(SQLQueries.SET_RELEASE_DATE_WHERE_ID.getQuery(), modifiedData, idOfBookToEdit);
+            case 4 -> sql = String.format(SQLQueries.SET_NUMBER_OF_PAGES_WHERE_ID.getQuery(), modifiedData, idOfBookToEdit);
+            case 5 -> sql = String.format(SQLQueries.SET_PRICE_WHERE_ID.getQuery(), modifiedData, idOfBookToEdit);
+            case 6 -> sql = String.format(SQLQueries.SET_STATUS_WHERE_ID.getQuery(), modifiedData, idOfBookToEdit);
             default -> System.out.println("Enter a valid ID or element to be edited!");
         }
         Statement editRecordWhereId = Main.databaseConnection.createStatement();
@@ -48,13 +47,13 @@ public interface Options {
         System.out.println("Give the ID of the book to be deleted");
         int id = scanner.nextInt();
         Statement removeFromDatabase = Main.databaseConnection.createStatement();
-        String sql = "DELETE FROM librjava WHERE id IN (" + id + ");";
+        String sql = String.format(SQLQueries.DELETE_WHERE_ID.getQuery(), id);
         removeFromDatabase.executeUpdate(sql);
     }
 
     static void option4() throws SQLException {
         Statement printDatabase = Main.databaseConnection.createStatement();
-        ResultSet resultSet = printDatabase.executeQuery("SELECT * FROM librjava;");
+        ResultSet resultSet = printDatabase.executeQuery(SQLQueries.SELECT_ALL.getQuery());
         ResultSetMetaData resultSetMetaData = resultSet.getMetaData();
         int columnsNumber = resultSetMetaData.getColumnCount();
         while (resultSet.next()) {

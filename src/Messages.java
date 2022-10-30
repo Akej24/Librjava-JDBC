@@ -20,7 +20,7 @@ public enum Messages {
                 [4] Show books database
                 [5] Exit the program""");
 
-    final private String message;
+    private final String message;
 
     Messages(String message) {
         this.message = message;
