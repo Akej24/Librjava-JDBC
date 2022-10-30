@@ -17,6 +17,7 @@ public interface Options {
         int numberOfPages = scanner.nextInt();
         Messages.PRICE.print();
         int price = scanner.nextInt();
+
         Statement addToDatabase = Main.databaseConnection.createStatement();
         String sql = String.format(SQLQueries.INSERT_INTO.getQuery(), title, author, releaseDate, numberOfPages, price);
         addToDatabase.executeUpdate(sql);
@@ -40,6 +41,7 @@ public interface Options {
             default -> System.out.println("Enter a valid ID or element to be edited!");
         }
         String result = String.format(sql, modifiedData, idOfBookToEdit);
+
         Statement editRecordWhereId = Main.databaseConnection.createStatement();
         editRecordWhereId.executeUpdate(result);
     }
@@ -47,6 +49,7 @@ public interface Options {
     static void option3(Scanner scanner) throws SQLException {
         System.out.println("Give the ID of the book to be deleted");
         int id = scanner.nextInt();
+
         Statement removeFromDatabase = Main.databaseConnection.createStatement();
         String sql = String.format(SQLQueries.DELETE_WHERE_ID.getQuery(), id);
         removeFromDatabase.executeUpdate(sql);
@@ -56,6 +59,7 @@ public interface Options {
         Statement printDatabase = Main.databaseConnection.createStatement();
         ResultSet resultSet = printDatabase.executeQuery(SQLQueries.SELECT_ALL.getQuery());
         ResultSetMetaData resultSetMetaData = resultSet.getMetaData();
+
         int columnsNumber = resultSetMetaData.getColumnCount();
         while (resultSet.next()) {
             for(int i = 1 ; i <= columnsNumber; i++){
