@@ -17,13 +17,7 @@ public class Main implements Options {
         }
     }
     public static void runMenu() throws SQLException {
-        System.out.println("""
-                        Welcome to Librjava, select an action:
-                        [1] Add a book
-                        [2] Edit a book
-                        [3] Delete a book
-                        [4] Show books database
-                        [5] Exit the program""");
+        Messages.MENU.print();
         int choice = scanner.nextInt();
         switch (choice) {
             case 1 -> Options.option1(scanner);

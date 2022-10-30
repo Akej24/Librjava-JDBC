@@ -7,44 +7,37 @@ import java.util.Scanner;
 public interface Options {
 
     static void option1(Scanner scanner) throws SQLException {
-        System.out.println("Give the title: ");
+        Messages.TITLE.print();
         String title = scanner.next();
-        System.out.println("Give the author: ");
+        Messages.AUTHOR.print();
         String author = scanner.next();
-        System.out.println("Give the release date: ");
-        String date = scanner.next();
-        System.out.println("Give the number of pages: ");
+        Messages.RELEASE_DATE.print();
+        String releaseDate = scanner.next();
+        Messages.NUMBER_OF_PAGES.print();
         int numberOfPages = scanner.nextInt();
-        System.out.println("Give the price: ");
+        Messages.PRICE.print();
         int price = scanner.nextInt();
         Statement addToDatabase = Main.databaseConnection.createStatement();
         String sql = "INSERT INTO librjava(title, author, releaseDate, numberOfPages, price) " +
-                "VALUES('"+title+"', '"+author+"', '"+date+"', "+numberOfPages+", "+price+");";
+                "VALUES('"+title+"', '"+author+"', '"+releaseDate+"', "+numberOfPages+", "+price+");";
         addToDatabase.executeUpdate(sql);
     }
 
     static void option2(Scanner scanner) throws SQLException {
         System.out.println("Give the ID of the book to be edited: ");
         int idOfBookToEdit = scanner.nextInt();
-        System.out.println("""
-                Give the element to be edited: ""
-                [1] Title
-                [2] Author
-                [3] ReleaseDate
-                [4] NumberOfPages
-                [5] Price
-                [6] Status""");
+        Messages.ELEMENT_TO_EDIT.print();
         int parameterOfBookToEdit = scanner.nextInt();
         System.out.println("Replace this data with: ");
         String modifiedData = scanner.next();
         String sql = "";
         switch (parameterOfBookToEdit) {
-            case 1 -> sql = "UPDATE librjava SET title = '" + modifiedData + "' WHERE id = " +idOfBookToEdit+ ";";
-            case 2 -> sql = "UPDATE librjava SET author = '" + modifiedData + "' WHERE id = " +idOfBookToEdit+ ";";
-            case 3 -> sql = "UPDATE librjava SET releaseDate = '" + modifiedData + "' WHERE id = " +idOfBookToEdit+ ";";
-            case 4 -> sql = "UPDATE librjava SET numberOfPages = " + modifiedData + " WHERE id = " +idOfBookToEdit+ ";";
-            case 5 -> sql = "UPDATE librjava SET price = " + modifiedData + " WHERE id = " +idOfBookToEdit+ ";";
-            case 6 -> sql = "UPDATE librjava SET status = " + modifiedData + " WHERE id = " +idOfBookToEdit+ ";";
+            case 1 -> sql = String.format("UPDATE librjava SET title = '%s' WHERE id = %d;", modifiedData, idOfBookToEdit);
+            case 2 -> sql = String.format("UPDATE librjava SET author = '%s' WHERE id = %d;", modifiedData, idOfBookToEdit);
+            case 3 -> sql = String.format("UPDATE librjava SET releaseDate = '%s' WHERE id = %d;", modifiedData, idOfBookToEdit);
+            case 4 -> sql = String.format("UPDATE librjava SET numberOfPages = '%s' WHERE id = %d;", modifiedData, idOfBookToEdit);
+            case 5 -> sql = String.format("UPDATE librjava SET price = '%s' WHERE id = %d;", modifiedData, idOfBookToEdit);
+            case 6 -> sql = String.format("UPDATE librjava SET status = '%s' WHERE id = %d;", modifiedData, idOfBookToEdit);
             default -> System.out.println("Enter a valid ID or element to be edited!");
         }
         Statement editRecordWhereId = Main.databaseConnection.createStatement();
