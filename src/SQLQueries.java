@@ -14,7 +14,7 @@ public enum SQLQueries {
         this.query = query;
     }
 
-    public String getQuery() {
+    String getQuery() {
         return query;
     }
 }

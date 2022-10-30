@@ -41,9 +41,12 @@ public interface Options {
             default -> System.out.println("Enter a valid ID or element to be edited!");
         }
         String result = String.format(sql, modifiedData, idOfBookToEdit);
+        try{
+            Statement editRecordWhereId = Main.databaseConnection.createStatement();
+            editRecordWhereId.executeUpdate(result);
+        } catch(SQLException ignored){
 
-        Statement editRecordWhereId = Main.databaseConnection.createStatement();
-        editRecordWhereId.executeUpdate(result);
+        }
     }
 
     static void option3(Scanner scanner) throws SQLException {

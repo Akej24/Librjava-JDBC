@@ -5,7 +5,7 @@ public enum Messages {
     NUMBER_OF_PAGES("Give the number of pages: "),
     PRICE("Give the author: "),
     ELEMENT_TO_EDIT("""
-                Give the element to be edited: ""
+                Give the element to be edited:
                 [1] Title
                 [2] Author
                 [3] ReleaseDate
