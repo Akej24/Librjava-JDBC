@@ -23,7 +23,7 @@ public interface Options {
         addToDatabase.executeUpdate(sql);
     }
 
-    static void option2(Scanner scanner) throws SQLException {
+    static void option2(Scanner scanner){
         System.out.println("Give the ID of the book to be edited: ");
         int idOfBookToEdit = scanner.nextInt();
         Messages.ELEMENT_TO_EDIT.print();
